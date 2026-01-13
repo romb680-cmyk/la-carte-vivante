@@ -1,63 +1,87 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>La Carte Vivante</title>
+<meta charset="UTF-8">
+<title>La Carte Vivante</title>
 
-    <script type="module"
-        src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
-    </script>
+<script type="module"
+  src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+</script>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: "Georgia", serif;
-            background-color: #f2f2f2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+<style>
+body {
+    margin: 0;
+      font-family: Georgia, serif;
+    background-image: url("Restaurantfond.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
-        .card {
-            background: white;
-            width: 700px;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-            text-align: center;
-        }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
-        h1 {
-            margin: 0;
-            font-size: 32px;
-        }
+.card {
+    background: white;
+    width: 700px;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    text-align: center;
+}
 
-        .slogan {
-            font-style: italic;
-            color: #666;
-            margin-bottom: 25px;
-        }
+h1 {
+    margin: 0;
+    font-size: 32px;
+}
 
-        button {
-            background: #111;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+.slogan {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 20px;
+}
 
-        model-viewer {
-            width: 100%;
-            height: 400px;
-            margin-top: 25px;
-            display: none;
-            background: #fafafa;
-            border-radius: 12px;
-        }
-    </style>
+button {
+    background: #111;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.viewer-wrapper {
+    position: relative;
+}
+
+model-viewer {
+    width: 100%;
+    height: 400px;
+    background: #fafafa;
+    border-radius: 12px;
+    display: none;
+}
+
+/* 🧱 Socle invisible */
+.socle {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: #fafafa;
+    z-index: 5;
+    pointer-events: none;
+    display: none;
+}
+</style>
 </head>
 
 <body>
@@ -66,29 +90,36 @@
     <h1>La Carte Vivante</h1>
     <p class="slogan">Voir avant de savourer</p>
 
-    <button onclick="showModel()">Découvrir le plat en 3D</button>
+    <button id="showBtn" onclick="showModel()">Découvrir le plat en 3D</button>
 
-    <model-viewer
-        id="viewer"
-        src="plat1.glb"
+    <div class="viewer-wrapper">
+        <model-viewer
+            id="viewer"
+            src="model.glb"
 
-        camera-controls
-        disable-pan
+            camera-controls
+            disable-pan
+            disable-zoom
+            interaction-prompt="none"
 
-        camera-orbit="0deg 60deg 2.5m"
-        min-polar-angle="30deg"
-        max-polar-angle="75deg"
+            camera-orbit="0deg 60deg 2.5m"
+            min-polar-angle="60deg"
+            max-polar-angle="60deg"
 
-        auto-rotate
-        auto-rotate-delay="1000"
-        shadow-intensity="1">
-    </model-viewer>
+            auto-rotate
+            shadow-intensity="1">
+        </model-viewer>
+
+        <div class="socle" id="socle"></div>
+    </div>
 </div>
 
 <script>
-    function showModel() {
-        document.getElementById("viewer").style.display = "block";
-    }
+function showModel() {
+    document.getElementById("viewer").style.display = "block";
+    document.getElementById("socle").style.display = "block";
+    document.getElementById("showBtn").style.display = "none"; // optionnel
+}
 </script>
 
 </body>
